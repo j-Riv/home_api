@@ -1,0 +1,32 @@
+{
+  "name": "addiciton-hue",
+  "version": "1.0.0",
+  "description": "Philips Hue",
+  "main": "server.js",
+  "scripts": {
+    "build": "babel -d lib/ src/",
+    "prestart": "yarn build",
+    "start": "node ./lib/server.js"
+  },
+  "author": "Jose A. Rivera <jose.alfredo.rivera@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "cors": "^2.8.5",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.1.0",
+    "morgan": "^1.9.1",
+    "node-fetch": "^2.6.0",
+    "raw-body": "^2.4.0",
+    "rotating-file-stream": "^1.4.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-latest": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.10"
+  }
+}
