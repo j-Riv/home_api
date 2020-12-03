@@ -1,7 +1,7 @@
 # HOME API
 > A home automation API
 
-Currently it can only control Philips Hue Lights but as necesity grows and time permits I will keep adding to this.
+Currently it can only control Philips Hue Lights but as necessity grows and time permits I will keep adding to this.
 
 ## Setup
 > .env
