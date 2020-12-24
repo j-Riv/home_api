@@ -55,7 +55,7 @@ export const getLightById = async (req: Request, res: Response) => {
 export const setLightAttr = async (req: Request, res: Response) => {
   const id: string = req.params.id;
   const name: string = req.body.name;
-  
+
   try {
     const response = await fetch(`${baseURL}/lights/${id}`, {
       method: 'PUT',

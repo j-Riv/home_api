@@ -51,7 +51,7 @@ export const updateConfig = async (req: Request, res: Response) => {
   interface Body {
     proxyport?: number,
     name?: string,
-    swupdate?: Object,
+    swupdate?: {},
     proxyaddress?: string,
     linkbutton?: boolean,
     ipaddress?: string,
