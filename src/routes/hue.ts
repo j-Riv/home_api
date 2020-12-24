@@ -1,10 +1,13 @@
+// @ts-ignore
 import dotenv from 'dotenv';
-import HueConfig from '../controllers/hue/config';
-import HueLights from '../controllers/hue/lights';
-import HueGroups from '../controllers/hue/groups';
+import express from 'express';
+import * as HueConfig from '../controllers/hue/config';
+import * as HueLights from '../controllers/hue/lights';
+import * as HueGroups from '../controllers/hue/groups';
 dotenv.config();
 
-module.exports = app => {
+export default (app: express.Application) => {
+  app.get('/api/hue/ping', HueConfig.ping);
   // config
   app.get('/api/hue/config', HueConfig.getConfig);
   app.post('/api/hue/config', HueConfig.updateConfig);

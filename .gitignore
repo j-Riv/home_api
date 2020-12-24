@@ -29,4 +29,5 @@ Temporary Items
 node_modules/
 logs/
 lib/
+dist/
 .env

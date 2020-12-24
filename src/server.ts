@@ -1,6 +1,5 @@
-import dotenv from 'dotenv';
-import 'babel-polyfill';
-import express from 'express';
+import dotenv from 'dotenv'
+import express, { Request, Response } from 'express';
 import path from 'path';
 import morgan from 'morgan';
 import cors from 'cors';
@@ -10,35 +9,35 @@ import exphbs from 'express-handlebars';
 import hue from './routes/hue';
 
 const PORT = process.env.PORT || 3000;
-const app = express();
+const app: express.Application = express();
 app.set('trust proxy', true);
 
 dotenv.config();
 
 // Define middleware here
 app.use(express.urlencoded({
-  limit: "50mb",
+  limit: '50mb',
   extended: true,
-  verify: (req, res, buf, encoding) => {
-    if (req.url.startsWith("/api/")) {
+  verify: (req: Request, res: Response, buf: Buffer, encoding: any) => {
+    if ((req.url as string).startsWith('/api/')) {
       if (buf && buf.length) {
-        req.rawbody = buf.toString(encoding || "utf8");
+        req.rawBody = buf.toString(encoding || 'utf8');
       }
     }
   }
 }));
-app.use(express.json({ 
-  limit: '50mb', 
-  extended: true,
-  verify: (req, res, buf, encoding) => {
+app.use(express.json({
+  limit: '50mb',
+  // extended: true,
+  verify: (req: Request, res: Response, buf: Buffer, encoding: any) => {
     if (req.url.startsWith('/api/')) {
       if (buf && buf.length) {
-        req.rawbody = buf.toString(encoding || 'utf8');
+        req.rawBody = buf.toString(encoding || 'utf8');
       }
     }
   }
   }));
-  
+
 // Serve up static assets
 // if (process.env.NODE_ENV === 'production') {
 //   app.use(express.static('client/dist'));
@@ -67,7 +66,7 @@ app.set('view engine', 'handlebars');
 // Define API routes here
 hue(app);
 
-app.listen(PORT, function () {
+app.listen(PORT, () => {
   console.log(
     '==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.',
     PORT,
