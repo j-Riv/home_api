@@ -1,4 +1,4 @@
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 import { Request, Response } from 'express';
 dotenv.config();
