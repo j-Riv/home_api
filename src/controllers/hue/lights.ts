@@ -1,7 +1,6 @@
 import dotenv from 'dotenv'
 import fetch from 'node-fetch';
 import { Request, Response } from 'express';
-import { stringify } from 'querystring';
 dotenv.config();
 
 const baseURL: string = `http://${process.env.HUE_BRIDGE_IP}/api/${process.env.HUE_USERNAME}`;

@@ -1,4 +1,3 @@
-// @ts-ignore
 import dotenv from 'dotenv';
 import express from 'express';
 import * as HueConfig from '../controllers/hue/config';
