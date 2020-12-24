@@ -1,15 +1,17 @@
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
 import fetch from 'node-fetch';
+import { Request, Response } from 'express';
+import { stringify } from 'querystring';
 dotenv.config();
 
-const baseURL = `http://${process.env.HUE_BRIDGE_IP}/api/${process.env.HUE_USERNAME}`;
+const baseURL: string = `http://${process.env.HUE_BRIDGE_IP}/api/${process.env.HUE_USERNAME}`;
 
 /**
  * Gets a list of all lights that have been discovered by the bridge.
- * @param {Object} req 
- * @param {Object} res 
+ * @param {Object} req
+ * @param {Object} res
  */
-exports.getAllLights = async (req, res) => {
+export const getAllLights = async (req: Request, res: Response) => {
   try {
     const response = await fetch(`${baseURL}/lights`, {
       method: 'GET',
@@ -25,11 +27,11 @@ exports.getAllLights = async (req, res) => {
 
 /**
  * Gets the attributes and state of a given light.
- * @param {Object} req 
- * @param {Object} res 
+ * @param {Object} req
+ * @param {Object} res
  */
-exports.getLightById = async (req, res) => {
-  const id = req.params.id;
+export const getLightById = async (req: Request, res: Response) => {
+  const id: string = req.params.id;
   try {
     const response = await fetch(`${baseURL}/lights/${id}`, {
       method: 'GET',
@@ -44,16 +46,17 @@ exports.getLightById = async (req, res) => {
 }
 
 /**
- * Used to rename lights. A light can have its name changed when in any state, 
+ * Used to rename lights. A light can have its name changed when in any state,
  * including when it is unreachable or off.
- * @param {Object} req 
+ * @param {Object} req
  * @param {Object} req.body
  * @param {string} req.body.name - The new name for the light.
- * @param {Object} res 
+ * @param {Object} res
  */
-exports.setLightAttr = async (req, res) => {
-  const id = req.params.id;
-  const name = req.body.name;
+export const setLightAttr = async (req: Request, res: Response) => {
+  const id: string = req.params.id;
+  const name: string = req.body.name;
+  
   try {
     const response = await fetch(`${baseURL}/lights/${id}`, {
       method: 'PUT',
@@ -71,12 +74,12 @@ exports.setLightAttr = async (req, res) => {
 
 /**
  * Allows the user to turn the light on and off.
- * @param {Object} req 
- * @param {Object} res 
+ * @param {Object} req
+ * @param {Object} res
  */
-exports.setLightState = async (req, res) => {
-  const id = req.params.id;
-  const state = req.params.state === 'on' ? true : false;
+export const setLightState = async (req: Request, res: Response) => {
+  const id: string = req.params.id;
+  const state: boolean = req.params.state === 'on' ? true : false;
   try {
     const response = await fetch(`${baseURL}/lights/${id}/state`, {
       method: 'PUT',
@@ -111,19 +114,37 @@ exports.setLightState = async (req, res) => {
  * @param {number} [req.body.ct_inc} - Color Temperature Increment/Decrement. -65534 - 65534.
  * @param {number[]} [req.body.xy_inc} - X & Y Coordinates Increment / Decrement. -0.5 to 0.5
  * @param {string} [req.body.scene] - The scene identifier.
- * @param {Object} res 
+ * @param {Object} res
  */
-exports.setLightHueState = async (req, res) => {
-  const body = req.body;
-  const data = {};
+export const setLightHueState = async (req: Request, res: Response) => {
+  const id: string = req.params.id;
+  interface Data {
+    on?: boolean,
+    bri?: number,
+    hue?: number,
+    sat?: number,
+    xy?: number[],
+    ct?: number,
+    alert?: string,
+    effect?: string,
+    transitiontime?: number;
+    bri_inc?: number,
+    sat_inc?: number,
+    hue_inc?: number,
+    ct_inc?: number,
+    xy_inc?: number,
+    scene?: string
+  }
+  const body: Data = req.body;
+  const data: Data = {};
   body.on && (data.on = body.on); // optional: true / false
   body.bri && (data.bri = body.bri); // optional: 1 - 54
-  body.hue && (data.hue = body.hue); // optional: 
+  body.hue && (data.hue = body.hue); // optional:
 
   try {
     const response = await fetch(`${baseURL}/lights/${id}/state`, {
       method: 'PUT',
-      body: JSON.stringify({ on: state }),
+      body: JSON.stringify(data),
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -134,4 +155,3 @@ exports.setLightHueState = async (req, res) => {
     console.log(e);
   }
 }
-

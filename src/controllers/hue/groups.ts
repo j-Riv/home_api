@@ -1,16 +1,17 @@
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
 import fetch from 'node-fetch';
+import { Request, Response } from 'express';
 dotenv.config();
 
-const baseURL = `http://${process.env.HUE_BRIDGE_IP}/api/${process.env.HUE_USERNAME}`;
+const baseURL: string = `http://${process.env.HUE_BRIDGE_IP}/api/${process.env.HUE_USERNAME}`;
 
 /**
- * Gets a list of all groups that have been added to the bridge. 
+ * Gets a list of all groups that have been added to the bridge.
  * A group is a list of lights that can be created, modified and deleted by a user.
- * @param {Object} req 
- * @param {Object} res 
+ * @param {Object} req
+ * @param {Object} res
  */
-exports.getAllGroups = async (req, res) => {
+export const getAllGroups = async (req: Request, res: Response) => {
   try {
     const response = await fetch(`${baseURL}/groups`, {
       method: 'GET',
@@ -26,11 +27,11 @@ exports.getAllGroups = async (req, res) => {
 
 /**
  * Gets the group attributes, e.g. name, light membership and last command for a given group.
- * @param {Object} req 
- * @param {Object} res 
+ * @param {Object} req
+ * @param {Object} res
  */
-exports.getGroupById = async (req, res) => {
-  const id = req.params.id;
+export const getGroupById = async (req: Request, res: Response) => {
+  const id: string = req.params.id;
   try {
     const response = await fetch(`${baseURL}/groups/${id}`, {
       method: 'GET',
@@ -51,12 +52,17 @@ exports.getGroupById = async (req, res) => {
  * @param {string} req.body.name - The new name for the group.
  * @param {string[]} req.body.lights - The ids of the lights that should be in this group. Ex: "1", "2".
  * @param {string} req.body.class - The Category of the Room type. Default is "Other".
- * @param {Object} res 
+ * @param {Object} res
  */
-exports.setGroupAttr = async (req, res) => {
-  const body = req.body;
-  const id = req.params.id;
-  const data = {};
+export const setGroupAttr = async (req: Request, res: Response) => {
+  const id: string = req.params.id;
+  interface Data {
+    name?: string,
+    lights?: string[],
+    class?: string
+  }
+  const body: Data = req.body;
+  const data: Data = {};
   body.name && (data.name = body.name);
   body.lights && (data.lights = body.lights);
   body.class && (data.class = body.class);
@@ -77,15 +83,15 @@ exports.setGroupAttr = async (req, res) => {
 
 /**
  * Modifies the state of all lights in a group.
- * 
- * User created groups will have an ID of 1 or higher; however a special group 
+ *
+ * User created groups will have an ID of 1 or higher; however a special group
  * with an ID of 0 also exists containing all the lamps known by the bridge.
- * @param {Object} req 
- * @param {Object} res 
+ * @param {Object} req
+ * @param {Object} res
  */
-exports.setGroupState = async (req, res) => {
-  const id = req.params.id;
-  const state = req.params.state === 'on' ? true : false;
+export const setGroupState = async (req: Request, res: Response) => {
+  const id: string = req.params.id;
+  const state: boolean = req.params.state === 'on' ? true : false;
   try {
     const response = await fetch(`${baseURL}/groups/${id}/action`, {
       method: 'PUT',
