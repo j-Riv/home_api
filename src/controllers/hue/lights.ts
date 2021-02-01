@@ -1,4 +1,4 @@
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 import { Request, Response } from 'express';
 dotenv.config();
@@ -22,7 +22,7 @@ export const getAllLights = async (req: Request, res: Response) => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 /**
  * Gets the attributes and state of a given light.
@@ -42,7 +42,7 @@ export const getLightById = async (req: Request, res: Response) => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 /**
  * Used to rename lights. A light can have its name changed when in any state,
@@ -69,7 +69,7 @@ export const setLightAttr = async (req: Request, res: Response) => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 /**
  * Allows the user to turn the light on and off.
@@ -92,7 +92,7 @@ export const setLightState = async (req: Request, res: Response) => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 /**
  * Allows the user to turn the light on and off, modify the hue and effects.
@@ -118,21 +118,21 @@ export const setLightState = async (req: Request, res: Response) => {
 export const setLightHueState = async (req: Request, res: Response) => {
   const id: string = req.params.id;
   interface Data {
-    on?: boolean,
-    bri?: number,
-    hue?: number,
-    sat?: number,
-    xy?: number[],
-    ct?: number,
-    alert?: string,
-    effect?: string,
+    on?: boolean;
+    bri?: number;
+    hue?: number;
+    sat?: number;
+    xy?: number[];
+    ct?: number;
+    alert?: string;
+    effect?: string;
     transitiontime?: number;
-    bri_inc?: number,
-    sat_inc?: number,
-    hue_inc?: number,
-    ct_inc?: number,
-    xy_inc?: number,
-    scene?: string
+    bri_inc?: number;
+    sat_inc?: number;
+    hue_inc?: number;
+    ct_inc?: number;
+    xy_inc?: number;
+    scene?: string;
   }
   const body: Data = req.body;
   const data: Data = {};
@@ -153,4 +153,4 @@ export const setLightHueState = async (req: Request, res: Response) => {
   } catch (e) {
     console.log(e);
   }
-}
+};

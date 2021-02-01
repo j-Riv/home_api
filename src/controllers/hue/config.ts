@@ -7,7 +7,7 @@ const baseURL: string = `http://${process.env.HUE_BRIDGE_IP}/api/${process.env.H
 
 export const ping = (req: Request, res: Response) => {
   res.status(200).send('PONG!');
-}
+};
 
 /**
  * Returns list of all configuration elements in the bridge. Note all times are stored in UTC.
@@ -26,7 +26,7 @@ export const getConfig = async (req: Request, res: Response) => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 /**
  * Allows the user to set some configuration values.
@@ -49,18 +49,18 @@ export const getConfig = async (req: Request, res: Response) => {
  */
 export const updateConfig = async (req: Request, res: Response) => {
   interface Body {
-    proxyport?: number,
-    name?: string,
-    swupdate?: {},
-    proxyaddress?: string,
-    linkbutton?: boolean,
-    ipaddress?: string,
-    netmask?: string,
-    gateway?: string,
-    dhcp?: boolean,
-    timezone?: string,
-    touchlink?: boolean,
-    zigbeechannel?: number
+    proxyport?: number;
+    name?: string;
+    swupdate?: {};
+    proxyaddress?: string;
+    linkbutton?: boolean;
+    ipaddress?: string;
+    netmask?: string;
+    gateway?: string;
+    dhcp?: boolean;
+    timezone?: string;
+    touchlink?: boolean;
+    zigbeechannel?: number;
   }
   const body: Body = req.body;
   try {
@@ -76,7 +76,7 @@ export const updateConfig = async (req: Request, res: Response) => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 /**
  * This command is used to fetch the entire datastore from the device, including settings and state information
@@ -97,5 +97,4 @@ export const getFullState = async (req: Request, res: Response) => {
   } catch (e) {
     console.log(e);
   }
-}
-
+};

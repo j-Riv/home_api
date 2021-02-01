@@ -12,23 +12,11 @@
     "noEmit": false,
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "./*"
-      ],
-      "@/*": [
-        "./*"
-      ]
+      "~/*": ["./*"],
+      "@/*": ["./*"]
     },
-    "types": [
-      "@types/node",
-      "@types/express"
-    ]
+    "types": ["@types/node", "@types/express"]
   },
-  "include": [
-    "src/**/*",
-    "types/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*", "types/*"],
+  "exclude": ["node_modules"]
 }

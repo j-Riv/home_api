@@ -1,4 +1,4 @@
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 import express, { Request, Response } from 'express';
 import path from 'path';
 import morgan from 'morgan';
@@ -15,28 +15,32 @@ app.set('trust proxy', true);
 dotenv.config();
 
 // Define middleware here
-app.use(express.urlencoded({
-  limit: '50mb',
-  extended: true,
-  verify: (req: Request, res: Response, buf: Buffer, encoding: any) => {
-    if ((req.url as string).startsWith('/api/')) {
-      if (buf && buf.length) {
-        req.rawBody = buf.toString(encoding || 'utf8');
+app.use(
+  express.urlencoded({
+    limit: '50mb',
+    extended: true,
+    verify: (req: Request, res: Response, buf: Buffer, encoding: any) => {
+      if ((req.url as string).startsWith('/api/')) {
+        if (buf && buf.length) {
+          req.rawBody = buf.toString(encoding || 'utf8');
+        }
       }
-    }
-  }
-}));
-app.use(express.json({
-  limit: '50mb',
-  // extended: true,
-  verify: (req: Request, res: Response, buf: Buffer, encoding: any) => {
-    if (req.url.startsWith('/api/')) {
-      if (buf && buf.length) {
-        req.rawBody = buf.toString(encoding || 'utf8');
+    },
+  })
+);
+app.use(
+  express.json({
+    limit: '50mb',
+    // extended: true,
+    verify: (req: Request, res: Response, buf: Buffer, encoding: any) => {
+      if (req.url.startsWith('/api/')) {
+        if (buf && buf.length) {
+          req.rawBody = buf.toString(encoding || 'utf8');
+        }
       }
-    }
-  }
-  }));
+    },
+  })
+);
 
 // Serve up static assets
 // if (process.env.NODE_ENV === 'production') {
@@ -48,8 +52,8 @@ app.use('/public', express.static(path.join(__dirname, '../public')));
 // create a rotating write stream
 const accessLogStream = rfs('access.log', {
   interval: '1d', // rotate daily
-  path: path.join(__dirname + '/../', 'logs')
-})
+  path: path.join(__dirname + '/../', 'logs'),
+});
 app.use(morgan('combined', { stream: accessLogStream }));
 app.use(cors());
 
@@ -57,7 +61,7 @@ app.use(cors());
 app.engine(
   'handlebars',
   exphbs({
-    defaultLayout: 'main'
+    defaultLayout: 'main',
   })
 );
 app.set('views', path.join(__dirname + '/views'));

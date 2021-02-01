@@ -1,4 +1,4 @@
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 import { Request, Response } from 'express';
 dotenv.config();
@@ -23,7 +23,7 @@ export const getAllGroups = async (req: Request, res: Response) => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 /**
  * Gets the group attributes, e.g. name, light membership and last command for a given group.
@@ -43,7 +43,7 @@ export const getGroupById = async (req: Request, res: Response) => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 /**
  * Allows the user to modify the name, light and class membership of a group.
@@ -57,9 +57,9 @@ export const getGroupById = async (req: Request, res: Response) => {
 export const setGroupAttr = async (req: Request, res: Response) => {
   const id: string = req.params.id;
   interface Data {
-    name?: string,
-    lights?: string[],
-    class?: string
+    name?: string;
+    lights?: string[];
+    class?: string;
   }
   const body: Data = req.body;
   const data: Data = {};
@@ -79,7 +79,7 @@ export const setGroupAttr = async (req: Request, res: Response) => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 /**
  * Modifies the state of all lights in a group.
@@ -105,4 +105,4 @@ export const setGroupState = async (req: Request, res: Response) => {
   } catch (e) {
     console.log(e);
   }
-}
+};

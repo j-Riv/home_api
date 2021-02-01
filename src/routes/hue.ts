@@ -21,4 +21,4 @@ export default (app: express.Application) => {
   app.get('/api/hue/groups/:id', HueGroups.getGroupById);
   app.post('/api/hue/groups/:id', HueGroups.setGroupAttr);
   app.get('/api/hue/groups/:id/:state', HueGroups.setGroupState);
-}
+};
